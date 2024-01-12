@@ -13,6 +13,10 @@ module.exports = (webpackEnv: string) => {
     return {
         entry: "./src/index.tsx",
         devServer: {
+            static: {
+                directory: path.join(__dirname, 'public'),
+                publicPath: publicUrlOrPath
+            },
             watchFiles: ["src/**/*"],
             port: 3000,
             open: publicUrlOrPath,
