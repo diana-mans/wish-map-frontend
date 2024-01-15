@@ -3,9 +3,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const InterpolateHtmlPlugin = require("interpolate-html-plugin");
 const getClientEnvironment = require("./config/env");
 const Dotenv = require('dotenv-webpack');
+const CopyPlugin = require("copy-webpack-plugin");
 require('dotenv').config()
 
-module.exports = (webpackEnv: string) => {
+module.exports = (webpackEnv) => {
     const isEnvProduction = webpackEnv === 'production';
     const publicUrlOrPath = process.env.PUBLIC_URL || '/'
     const env = getClientEnvironment(publicUrlOrPath.slice(0, -1));
@@ -21,7 +22,7 @@ module.exports = (webpackEnv: string) => {
             port: 3000,
             open: publicUrlOrPath,
         },
-        infrastructureLogging: { level: 'error' },
+        infrastructureLogging: {level: 'error'},
         stats: 'minimal',
         module: {
             rules: [
@@ -49,6 +50,16 @@ module.exports = (webpackEnv: string) => {
         },
         plugins: [
             new Dotenv(),
+            new CopyPlugin(
+                {
+                    patterns: [
+                        {from: 'public',  globOptions: {
+                                dot: true,
+                                gitignore: true,
+                                ignore: ["**/index.html"]
+                            },}
+                    ]
+                }),
             new HtmlWebpackPlugin(
                 Object.assign(
                     {},
@@ -80,7 +91,7 @@ module.exports = (webpackEnv: string) => {
             filename: "bundle.js",
             path: path.resolve(__dirname, "build"),
             clean: true,
-            publicPath: publicUrlOrPath
+            // publicPath: publicUrlOrPath
         },
     };
 }
