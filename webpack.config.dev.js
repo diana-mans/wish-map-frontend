@@ -12,6 +12,9 @@ require('dotenv').config()
 
 module.exports = (webpackEnv) => {
     const isEnvProduction = webpackEnv === 'production';
+
+    console.log('webpackEnv ', process.env.NODE_ENV)
+
     const publicUrlOrPath = process.env.PUBLIC_URL || '/'
     const env = getClientEnvironment(publicUrlOrPath.slice(0, -1));
 
