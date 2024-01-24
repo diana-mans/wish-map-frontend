@@ -1,9 +1,13 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ReactRefreshTypeScript = require('react-refresh-typescript');
 const InterpolateHtmlPlugin = require("interpolate-html-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
 const getClientEnvironment = require("./config/env");
 const Dotenv = require('dotenv-webpack');
-const CopyPlugin = require("copy-webpack-plugin");
 require('dotenv').config()
 
 module.exports = (webpackEnv) => {
@@ -18,7 +22,6 @@ module.exports = (webpackEnv) => {
                 directory: path.join(__dirname, 'public'),
                 publicPath: publicUrlOrPath
             },
-            watchFiles: ["src/**/*"],
             port: 3000,
             open: publicUrlOrPath,
         },
@@ -28,8 +31,18 @@ module.exports = (webpackEnv) => {
             rules: [
                 {
                     test: /\.(tsx|ts)$/,
-                    use: "ts-loader",
                     exclude: /node_modules/,
+                    use: [
+                        {
+                            loader: require.resolve("ts-loader"),
+                            options: {
+                                getCustomTransformers: () => ({
+                                    before: [ReactRefreshTypeScript()]
+                                }),
+                                transpileOnly: true
+                            }
+                        }
+                    ]
                 },
                 {
                     test: /\.(scss|css)$/,
@@ -43,12 +56,12 @@ module.exports = (webpackEnv) => {
                         filename: 'images/static/[name].[hash][ext]',
                     },
                 },
-            ],
-        },
-        resolve: {
-            extensions: [".tsx", ".ts", ".jsx", ".js"],
+            ]
         },
         plugins: [
+            new webpack.EnvironmentPlugin({
+                "process.env.NODE_ENV": process.env.NODE_ENV
+            }),
             new Dotenv(),
             new CopyPlugin(
                 {
@@ -81,13 +94,22 @@ module.exports = (webpackEnv) => {
                         : undefined
                 )
             ),
-            new InterpolateHtmlPlugin(env.raw)
+            new InterpolateHtmlPlugin(env.raw),
+            new ReactRefreshWebpackPlugin()
         ],
+        devtool: "source-map",
+        resolve: {
+            extensions: [".tsx", ".ts", ".jsx", ".js"],
+            fallback: {
+                http: false,
+                https: false
+            },
+        },
         output: {
-            filename: "bundle.js",
+            filename: '[name].bundle.js',
             path: path.resolve(__dirname, "build"),
             clean: true,
             publicPath: publicUrlOrPath
         },
-    };
-}
+    }
+};

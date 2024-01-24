@@ -13,15 +13,6 @@ module.exports = (webpackEnv) => {
 
     return {
         entry: "./src/index.tsx",
-        devServer: {
-            static: {
-                directory: path.join(__dirname, 'public'),
-                publicPath: publicUrlOrPath
-            },
-            watchFiles: ["src/**/*"],
-            port: 3000,
-            open: publicUrlOrPath,
-        },
         infrastructureLogging: {level: 'error'},
         stats: 'minimal',
         module: {
@@ -88,10 +79,9 @@ module.exports = (webpackEnv) => {
             new InterpolateHtmlPlugin(env.raw)
         ],
         output: {
-            filename: "bundle.js",
+            filename: '[name].bundle.js',
             path: path.resolve(__dirname, "build"),
             clean: true,
-            // publicPath: publicUrlOrPath
         },
     };
 }
