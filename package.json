@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development env-cmd webpack serve --mode development --config webpack.config.dev.js",
-    "build": "NODE_ENV=production env-cmd webpack --mode production --config webpack.config.prod.js",
-    "build:vk": "NODE_ENV=production env-cmd -f .env.vk webpack --mode production --config webpack.config.prod.js",
-    "build:tg": "NODE_ENV=production env-cmd -f .env.tg webpack --mode production --config webpack.config.prod.js"
+    "dev": "env-cmd webpack serve --mode development --config webpack.config.dev.js",
+    "build": "env-cmd webpack --mode production --config webpack.config.prod.js",
+    "build:vk": "env-cmd -f .env.vk webpack --mode production --config webpack.config.prod.js",
+    "build:tg": "env-cmd -f .env.tg webpack --mode production --config webpack.config.prod.js"
   },
   "keywords": [],
   "author": "",
