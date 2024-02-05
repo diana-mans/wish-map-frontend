@@ -2,7 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const ReactRefreshTypeScript = require('react-refresh-typescript');
 const InterpolateHtmlPlugin = require("interpolate-html-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
@@ -30,26 +29,24 @@ module.exports = (webpackEnv) => {
         module: {
             rules: [
                 {
-                    test: /\.(tsx|ts)$/,
-                    exclude: /node_modules/,
-                    use: [
-                        {
-                            loader: require.resolve("ts-loader"),
-                            options: {
-                                getCustomTransformers: () => ({
-                                    before: [ReactRefreshTypeScript()]
-                                }),
-                                transpileOnly: true
-                            }
-                        }
-                    ]
+                    test: /\.(js|jsx|ts|tsx|mjs)$/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                "@babel/preset-env",
+                                "@babel/preset-typescript",
+                                ["@babel/preset-react", {"runtime": "automatic"}]
+                            ],
+                        },
+                    },
                 },
                 {
                     test: /\.(scss|css)$/,
                     use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
                 },
                 {
-                    test: /\.(png|eot|otf|ttf|woff|woff2|svg|gif|mp3)$/i,
+                    test: /\.(png|jpg|webp|eot|otf|ttf|woff|woff2|svg|gif|mp3)$/i,
                     type: 'asset/resource',
                     generator: {
                         // adding a hash to the file

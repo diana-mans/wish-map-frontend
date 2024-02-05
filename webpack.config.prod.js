@@ -18,16 +18,24 @@ module.exports = (webpackEnv) => {
         module: {
             rules: [
                 {
-                    test: /\.(tsx|ts)$/,
-                    use: "ts-loader",
-                    exclude: /node_modules/,
+                    test: /\.(js|jsx|ts|tsx|mjs)$/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                "@babel/preset-env",
+                                "@babel/preset-typescript",
+                                ["@babel/preset-react", {"runtime": "automatic"}]
+                            ],
+                        },
+                    },
                 },
                 {
                     test: /\.(scss|css)$/,
                     use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
                 },
                 {
-                    test: /\.(png|eot|otf|ttf|woff|woff2|svg|gif|mp3)$/i,
+                    test: /\.(png|jpg|webp|eot|otf|ttf|woff|woff2|svg|gif|mp3)$/i,
                     type: 'asset/resource',
                     generator: {
                         // adding a hash to the file
