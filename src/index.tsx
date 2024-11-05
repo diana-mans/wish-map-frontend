@@ -1,9 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './assets/styles/global.scss'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './assets/styles/global.scss';
+import { App } from './app/App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <div className={"text-4xl"}>Hello world!</div>
-    </React.StrictMode>,
-)
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>,
+);

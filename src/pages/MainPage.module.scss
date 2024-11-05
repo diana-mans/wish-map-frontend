@@ -1,0 +1,258 @@
+.MainPage {
+	padding: 40px 0px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+
+	img {
+		max-width: calc(100% - 40px);
+	}
+
+	.img1 {
+		width: 600px;
+	}
+	.line {
+		width: 308px;
+		height: 7px;
+		background-color: #a0d8cd;
+		margin: 24px 0px;
+	}
+	.blue_cont {
+		margin: 150px 0px 20px;
+		width: 100%;
+		height: 1054px;
+		background-color: #4971e3;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		position: relative;
+
+		.img2 {
+			position: absolute;
+			bottom: 220px;
+			width: 677px;
+		}
+
+		@media (max-width: 700px) {
+			height: 840px;
+			.img2 {
+				bottom: 220px;
+				width: 500px;
+			}
+		}
+		@media (max-width: 540px) {
+			height: calc(100vw * 1.5);
+		}
+	}
+	.img3 {
+		width: 625px;
+		margin-bottom: 40px;
+	}
+	.step1 {
+		width: 638px;
+	}
+	.step {
+		width: 638px;
+		margin: 20px 0px;
+	}
+	.step3 {
+		width: 486px;
+	}
+	.img4 {
+		width: 672px;
+		margin-bottom: 20px;
+	}
+	.use_photo {
+		margin: 30px 0px 0px;
+		width: 561px;
+	}
+	.img5 {
+		width: 630px;
+	}
+	.add_photo_text {
+		margin-top: 40px;
+		font-size: 44px;
+	}
+	.add_photo {
+		width: 400px;
+		cursor: pointer;
+	}
+	.card_vert {
+		margin: 20px 0px 60px;
+		width: 588px;
+		height: 921px;
+		background-image: url(../assets/images/photo_vert.png);
+		background-size: 100% 100%;
+		transform: rotate(-3deg);
+		position: relative;
+
+		.text {
+			position: absolute;
+			top: 800px;
+			left: 60px;
+			font-family: 'Montserrat';
+			color: #615852;
+			font-weight: 600;
+			font-size: 20px;
+			line-height: normal;
+			text-align: left;
+			max-width: 610px;
+			list-style-type: disc;
+		}
+		@media (max-width: 700px) {
+			width: calc(588px * 0.7);
+			height: calc(921px * 0.7);
+
+			.text {
+				font-size: 16px;
+				top: 530px;
+				left: 30px;
+			}
+		}
+		@media (max-width: 510px) {
+			width: calc(588px * 0.5);
+			height: calc(921px * 0.5);
+
+			.text {
+				font-size: 12px;
+				top: 390px;
+				left: 18px;
+			}
+		}
+	}
+	.card_horiz {
+		margin: 20px 0px 60px;
+		width: 670px;
+		height: 530px;
+		background-image: url(../assets/images/cart-horiz.png);
+		background-size: 100% 100%;
+		position: relative;
+
+		.text {
+			position: absolute;
+			top: 440px;
+			left: 40px;
+			font-family: 'Montserrat';
+			color: #615852;
+			font-weight: 600;
+			font-size: 20px;
+			line-height: normal;
+			text-align: left;
+			max-width: 610px;
+			list-style-type: disc;
+		}
+		@media (max-width: 700px) {
+			width: calc(670px * 0.7);
+			height: calc(530px * 0.7);
+
+			.text {
+				top: 300px;
+				left: 30px;
+				font-size: 16px;
+			}
+		}
+		@media (max-width: 510px) {
+			width: calc(670px * 0.5);
+			height: calc(530px * 0.5);
+
+			.text {
+				top: 220px;
+				left: 15px;
+				font-size: 12px;
+			}
+		}
+	}
+	textarea {
+		background-image: url(../assets/images/lines_blue.png);
+		background-size: 673px 60px;
+		background-position: center bottom;
+		background-repeat: no-repeat;
+		width: 673px;
+		height: 90px;
+		font-family: 'Montserrat';
+		font-size: 18px;
+		line-height: 170%;
+
+		margin: 0;
+		padding: 0;
+		border: none;
+		outline: none;
+		resize: none;
+		max-width: calc(100% - 40px);
+	}
+	.pink_text {
+		color: #f89bb0;
+	}
+	.blue_button {
+		padding: 10px;
+		max-width: calc(100% - 40px);
+		margin: 40px 0px 40px;
+		width: 685px;
+		height: 332px;
+		background-color: #4971e3;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 20px;
+		border-radius: 20px;
+
+		h1 {
+			color: #f89bb0 !important;
+		}
+		h3 {
+			color: white;
+		}
+		button {
+			max-width: 100%;
+			bottom: -100px;
+			position: absolute;
+			width: 460px;
+			background-color: #f89bb0;
+			font-family: 'Cocomat';
+			color: #fff;
+			font-weight: 400;
+			font-size: 42px;
+			line-height: 100%;
+			text-transform: uppercase;
+			text-align: center;
+			border-radius: 70px;
+			padding: 37px 30px 27px;
+			margin: 30px 0px 20px;
+
+			cursor: pointer;
+			@media (max-width: 700px) {
+				width: 400px;
+				font-size: 37px;
+			}
+			@media (max-width: 510px) {
+				width: 300px;
+				bottom: -70px;
+				font-size: 28px;
+			}
+		}
+	}
+	.img6 {
+		width: 600px;
+		margin-top: 60px;
+	}
+	.send_text {
+		margin: 50px 0px;
+		cursor: pointer;
+		span {
+			color: #f89bb0;
+		}
+	}
+	.img7 {
+		width: 600px;
+	}
+	.blue_line {
+		width: 100%;
+		height: 7px;
+		background-color: #4971e3;
+		margin: 80px 0px 25px;
+	}
+}

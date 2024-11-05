@@ -1,1 +1,159 @@
-@import "./libs/tailwind.scss";
+@import './libs/tailwind.scss';
+
+@font-face {
+	font-family: 'Cocomat'; /* Имя шрифта */
+	src: url('../fonts/cocomat-pro-black.ttf') format('truetype'); /* Путь к файлу шрифта */
+	font-weight: normal; /* Нормальный вес шрифта */
+	font-style: normal; /* Нормальный стиль шрифта */
+}
+
+@font-face {
+	font-family: 'Montserrat'; /* Имя шрифта */
+	src: url('../fonts/Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype'); /* Путь к файлу шрифта */
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+#root {
+	flex: 1;
+}
+
+body,
+html,
+#root {
+	width: 100%;
+
+	* {
+		white-space: pre-wrap;
+	}
+
+	p {
+		font-family: 'Montserrat';
+		color: #615852;
+		font-weight: 400;
+		font-size: 20px;
+		line-height: normal;
+		text-align: center;
+		max-width: 565px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	li {
+		font-family: 'Montserrat';
+		color: #615852;
+		font-weight: 400;
+		font-size: 20px;
+		line-height: normal;
+		text-align: left;
+		max-width: 610px;
+		list-style-type: disc;
+		padding-left: 40px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	h1 {
+		font-family: 'Cocomat';
+		color: #4971e3;
+		font-weight: 400;
+		font-size: 56px;
+		line-height: 100%;
+		text-transform: uppercase;
+		text-align: center;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	h2 {
+		font-family: 'Cocomat';
+		color: #4971e3;
+		font-weight: 400;
+		font-size: 48px;
+		line-height: 100%;
+		text-align: center;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	h3 {
+		font-family: 'Cocomat';
+		color: white;
+		font-weight: 400;
+		font-size: 42px;
+		line-height: 100%;
+		text-align: center;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.pink {
+		color: #f1b7b6;
+	}
+	.white {
+		color: white;
+	}
+	.wide-text {
+		max-width: 647px;
+		text-align: left;
+	}
+	.cell {
+		max-width: calc(100% - 40px);
+		width: 657px;
+
+		font-family: 'Cocomat';
+		color: #fff;
+		font-weight: 400;
+		font-size: 42px;
+		line-height: 100%;
+		text-transform: uppercase;
+		text-align: center;
+		border-radius: 70px;
+		padding: 37px 30px 27px;
+		margin: 30px 0px 20px;
+	}
+	.cell.blue {
+		background-color: #4971e3;
+	}
+	.cell.pink {
+		background-color: #f89bb0;
+	}
+
+	@media (max-width: 700px) {
+		p,
+		li {
+			max-width: 100%;
+			font-size: 16px;
+		}
+		h1 {
+			max-width: 100%;
+			font-size: 48px;
+		}
+		h2 {
+			max-width: 100%;
+			font-size: 44px;
+		}
+		h3 {
+			max-width: 100%;
+			font-size: 34px;
+		}
+		.cell {
+			font-size: 37px;
+		}
+	}
+	@media (max-width: 510px) {
+		h1 {
+			font-size: 36px;
+		}
+		h2 {
+			font-size: 34px;
+		}
+		h3 {
+			font-size: 26px;
+		}
+		.cell {
+			font-size: 28px;
+			padding: 30px 30px 20px;
+		}
+	}
+}
