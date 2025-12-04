@@ -17,6 +17,8 @@ export const Card = ({
 		textarea_image: any;
 		arrow_image: any;
 		text: string;
+		min: number;
+		max: number;
 		setText: (text: string) => void;
 		imageSrc: string;
 		setImageSrc: (ev: string) => void;
@@ -26,11 +28,11 @@ export const Card = ({
 	setCurrentImageIndex: (id: number) => void;
 }) => {
 	const handleNextImage = () => {
-		setCurrentImageIndex(currentImageIndex < 44 ? currentImageIndex + 1 : 1); // Переключаемся на следующее изображение
+		setCurrentImageIndex(currentImageIndex < card.max ? currentImageIndex + 1 : card.min); // Переключаемся на следующее изображение
 	};
 
 	const handlePrevImage = () => {
-		setCurrentImageIndex(currentImageIndex > 1 ? currentImageIndex - 1 : 44); // Переключаемся на предыдущее изображение
+		setCurrentImageIndex(currentImageIndex > card.min ? currentImageIndex - 1 : card.max); // Переключаемся на предыдущее изображение
 	};
 
 	return (

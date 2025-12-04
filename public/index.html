@@ -4,10 +4,164 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%PUBLIC_URL%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Зожигай</title>
+		<meta property="og:image" content="./og.png" />
+		<meta name="twitter:image" content="./og.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta property="og:title" content="ЗОЖИГАЙ" />
+		<title>ЗОЖИГАЙ</title>
+		<script>
+			// Скрипт переадресации
+			// window.location.href = 'https://leonov-chef.com/off';
+		</script>
 	</head>
 	<body>
-		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="root"></div>
+
+		<div id="form-popup">
+			<img src="./close.png" class="close-img" id="close" />
+			<form
+				id="ltForm8173843"
+				class="lt-normal-form lt-form-inner lt-form"
+				action="https://antiage-kitchen.ru/pl/lite/block-public/process-html?id=2117272375"
+				method="post"
+				data-open-new-window="0"
+				onsubmit="return validateForm()">
+				<input type="hidden" name="formParams[setted_offer_id]" />
+				<p id="error-message" style="color: red; display: none"></p>
+				<input
+					class="text-input"
+					type="text"
+					maxlength="60"
+					placeholder="Введите ваше имя и фамилию"
+					name="formParams[full_name]"
+					value=""
+					required />
+				<input
+					class="text-input"
+					type="email"
+					maxlength="60"
+					placeholder="Введите ваш e-mail"
+					name="formParams[email]"
+					value=""
+					required />
+				<input
+					class="text-input"
+					type="tel"
+					maxlength="60"
+					placeholder="Введите ваш телефон"
+					name="formParams[phone]"
+					value=""
+					required />
+				<div class="checkbox_container">
+					<label>
+						<input type="checkbox" name="formParams[dealCustomFields][1278860]" required />
+						<span>Я проверил(а) свой адрес электронной почты</span>
+					</label>
+				</div>
+				<div class="checkbox_container">
+					<label>
+						<input type="checkbox" name="formParams[dealCustomFields][1269710]" required />
+						<span>
+							Я даю
+							<a href="https://leonov-chef.com/sogl_pers" target="_blank"
+								>согласие на обработку моих персональных данных в соответствии с политикой
+								конфиденциальности</a
+							>
+						</span>
+					</label>
+				</div>
+				<div class="checkbox_container">
+					<label>
+						<input type="checkbox" name="formParams[userCustomFields][1295969]" required />
+						<span>
+							Я даю
+							<a href="https://leonov-chef.com/soglasie" target="_blank"
+								>согласие на получение информационной и рекламной рассылки по ссылке</a
+							>
+						</span>
+					</label>
+				</div>
+				<button
+					type="submit"
+					id="button5416564"
+					style="color: #ffffff; background-color: #4971e3; border-radius: 30px !important"
+					onclick="if(window['btnprs6737707b99a0e']){return false;}window['btnprs6737707b99a0e']=true;setTimeout(function(){window['btnprs6737707b99a0e']=false},6000);return true;">
+					КАРТА ЖЕЛАНИЙ ЗДЕСЬ!
+				</button>
+				<input name="formParams[dealCustomFields][658684]" type="hidden" />
+				<input name="formParams[dealCustomFields][658685]" type="hidden" />
+				<input name="formParams[dealCustomFields][658686]" type="hidden" />
+				<input name="formParams[dealCustomFields][658687]" type="hidden" />
+				<input
+					type="hidden"
+					id="13078646737707b912c5"
+					name="__gc__internal__form__helper"
+					class="__gc__internal__form__helper"
+					value="" />
+				<input
+					type="hidden"
+					id="13078646737707b912c5ref"
+					name="__gc__internal__form__helper_ref"
+					class="__gc__internal__form__helper_ref"
+					value="" />
+				<input type="hidden" name="requestTime" value="1731686523" />
+				<input type="hidden" name="requestSimpleSign" value="7c42daed5930af3a262f2cd50fb24fe1" />
+				<input type="hidden" name="isHtmlWidget" value="1" />
+			</form>
+			<span id="gccounterImgContainer"></span>
+			<script>
+				window.addEventListener('load', function () {
+					let loc = document.getElementById('13078646737707b912c5');
+					loc.value = window.location.href;
+					let ref = document.getElementById('13078646737707b912c5ref');
+					ref.value = document.referrer;
+
+					let statUrl =
+						'https://antiage-kitchen.ru/stat/counter?ref=' +
+						encodeURIComponent(document.referrer) +
+						'&loc=' +
+						encodeURIComponent(document.location.href);
+					document.getElementById('gccounterImgContainer').innerHTML =
+						"<img width=1 height=1 style='display:none' id='gccounterImg' src='" + statUrl + "'/>";
+				});
+			</script>
+			<script>
+				function validateForm() {
+					const fullName = document.forms['ltForm8173843']['formParams[full_name]'].value;
+					const email = document.forms['ltForm8173843']['formParams[email]'].value;
+					const phone = document.forms['ltForm8173843']['formParams[phone]'].value;
+					const errorMessageElement = document.getElementById('error-message');
+
+					// Сброс сообщения об ошибках
+					errorMessageElement.style.display = 'none';
+					errorMessageElement.innerHTML = '';
+
+					// Проверка имени
+					if (fullName.trim() === '') {
+						errorMessageElement.innerHTML = 'Пожалуйста, введите ваше имя и фамилию.';
+						errorMessageElement.style.display = 'block';
+						return false;
+					}
+
+					// Проверка email с помощью регулярного выражения
+					const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					if (!emailPattern.test(email)) {
+						errorMessageElement.innerHTML = 'Пожалуйста, введите корректный email.';
+						errorMessageElement.style.display = 'block';
+						return false;
+					}
+
+					// Проверка телефона (пример для формата +7 (999) 999-99-99)
+					const phonePattern = /^\+?\d{1,3}[- ]?\(?\d{1,4}?\)?[- ]?\d{1,4}[- ]?\d{1,4}$/;
+					if (!phonePattern.test(phone)) {
+						errorMessageElement.innerHTML = 'Пожалуйста, введите корректный номер телефона.';
+						errorMessageElement.style.display = 'block';
+						return false;
+					}
+
+					return true; // Если все проверки пройдены, форма отправляется
+				}
+			</script>
+		</div>
 	</body>
 </html>

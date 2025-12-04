@@ -1,0 +1,26 @@
+.Popup {
+	width: 90vw;
+	height: calc(90vw / 1.7);
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background-image: url(../../assets/images/offer.png);
+	background-size: cover;
+	border: 1px solid black;
+	border-radius: 6.8vw;
+
+	.close {
+		position: absolute;
+		right: 2%;
+		top: 5%;
+		width: 5%;
+		opacity: 0.6;
+		cursor: pointer;
+	}
+
+	@media (min-width: 700px) {
+		width: 70vw;
+		height: calc(70vw / 1.7);
+	}
+}

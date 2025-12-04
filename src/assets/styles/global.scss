@@ -11,24 +11,23 @@
 	font-family: 'Montserrat'; /* Имя шрифта */
 	src: url('../fonts/Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype'); /* Путь к файлу шрифта */
 }
-
-body {
-	display: flex;
-	flex-direction: column;
+@font-face {
+	font-family: 'American Captain'; /* Имя шрифта */
+	src: url('../fonts/Captain/americancaptaincyrillic.ttf') format('truetype'); /* Путь к файлу шрифта */
 }
 
 #root {
+	width: 100%;
 	flex: 1;
+
+	iframe {
+		display: none;
+	}
 }
 
 body,
-html,
-#root {
+html {
 	width: 100%;
-
-	* {
-		white-space: pre-wrap;
-	}
 
 	p {
 		font-family: 'Montserrat';
@@ -40,6 +39,7 @@ html,
 		max-width: 565px;
 		padding-left: 20px;
 		padding-right: 20px;
+		white-space: pre-wrap;
 	}
 	li {
 		font-family: 'Montserrat';
@@ -53,6 +53,7 @@ html,
 		padding-left: 40px;
 		padding-left: 20px;
 		padding-right: 20px;
+		white-space: pre-wrap;
 	}
 
 	h1 {
@@ -65,6 +66,7 @@ html,
 		text-align: center;
 		padding-left: 20px;
 		padding-right: 20px;
+		white-space: pre-wrap;
 	}
 	h2 {
 		font-family: 'Cocomat';
@@ -74,6 +76,7 @@ html,
 		line-height: 100%;
 		text-align: center;
 		padding-left: 20px;
+		white-space: pre-wrap;
 		padding-right: 20px;
 	}
 	h3 {
@@ -85,6 +88,7 @@ html,
 		text-align: center;
 		padding-left: 20px;
 		padding-right: 20px;
+		white-space: pre-wrap;
 	}
 
 	.pink {
@@ -111,6 +115,7 @@ html,
 		border-radius: 70px;
 		padding: 37px 30px 27px;
 		margin: 30px 0px 20px;
+		white-space: pre-wrap;
 	}
 	.cell.blue {
 		background-color: #4971e3;
@@ -154,6 +159,113 @@ html,
 		.cell {
 			font-size: 28px;
 			padding: 30px 30px 20px;
+		}
+	}
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+
+	#form-popup {
+		position: fixed;
+		width: 400px;
+		height: fit-content;
+		background-color: #ffc4d2;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%) scale(0.8);
+		border-radius: 20px;
+		padding: 50px 20px;
+		display: none;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		* {
+			white-space: unset;
+		}
+
+		.close-img {
+			width: 30px;
+			height: 30px;
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			opacity: 0.7;
+			cursor: pointer;
+		}
+
+		form {
+			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 20px;
+		}
+
+		#error-message {
+			text-align: left;
+			font-size: 16px;
+		}
+		input[type='text'],
+		input[type='email'],
+		input[type='tel'],
+		.text-input {
+			padding: 10px 20px;
+			width: 100%;
+			border-radius: 20px;
+			height: 70px;
+			border: 1px solid #717171;
+			font-size: 18px;
+		}
+		input[type='text']:focus,
+		input[type='email']:focus,
+		input[type='tel']:focus,
+		.text-input {
+			outline: none;
+		}
+
+		.checkbox_container {
+			width: 100%;
+			height: fit-content;
+			label {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: nowrap;
+				justify-content: flex-start;
+				width: 100%;
+				align-items: flex-start;
+				text-indent: 0%;
+
+				input {
+					margin-top: 7px;
+				}
+
+				span {
+					text-align: left;
+					margin-left: 10px;
+					text-indent: 0px;
+					display: inline;
+
+					a {
+						color: #4d7da3;
+						display: inline;
+					}
+					a:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+		button {
+			height: 60px;
+			width: 300px;
+			align-self: center;
+		}
+		button:hover {
+			transform: scale(1.1);
 		}
 	}
 }

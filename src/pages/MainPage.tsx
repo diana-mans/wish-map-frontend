@@ -17,7 +17,7 @@ import textarBlue from '../assets/images/lines_blue.png';
 import arrPink from '../assets/images/arrow_pink.png';
 import arrGreen from '../assets/images/arrow_green.png';
 import arrBlue from '../assets/images/arrow_blue.png';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Footer } from '../blocks/Footer/Footer';
 import { Card } from './Card';
 import cardImg1 from '../assets/images/card/1.png';
@@ -34,72 +34,78 @@ import cardImg11 from '../assets/images/card/11.png';
 import cardImg12 from '../assets/images/card/12.png';
 import cardImg13 from '../assets/images/card/13.png';
 import mapImg from '../assets/images/card/card.png';
+import axios from 'axios';
 
-const cardsImgs = [
+type flowerType = {
+	img: string;
+	x: number;
+	y: number;
+};
+const cardsImgs: flowerType[] = [
 	{
 		img: cardImg1,
-		x: 10,
-		y: 10,
+		x: 470,
+		y: 430,
 	},
 	{
 		img: cardImg2,
-		x: 20,
-		y: 10,
+		x: 900,
+		y: 430,
 	},
 	{
 		img: cardImg3,
-		x: 30,
-		y: 10,
+		x: 1300,
+		y: 430,
 	},
 	{
 		img: cardImg4,
 		x: 40,
-		y: 10,
+		y: 480,
 	},
 	{
 		img: cardImg5,
-		x: 50,
-		y: 10,
+		x: 20,
+		y: 840,
 	},
 	{
 		img: cardImg6,
-		x: 60,
-		y: 10,
+		x: 400,
+		y: 760,
 	},
 	{
 		img: cardImg7,
-		x: 70,
-		y: 10,
+		x: 750,
+		y: 750,
 	},
 	{
 		img: cardImg8,
-		x: 80,
-		y: 10,
+		x: 1290,
+		y: 870,
 	},
 	{
 		img: cardImg9,
-		x: 90,
-		y: 10,
+		x: 870,
+		y: 1000,
 	},
 	{
 		img: cardImg10,
-		x: 100,
-		y: 10,
+		x: 510,
+		y: 1000,
 	},
 	{
 		img: cardImg11,
-		x: 120,
-		y: 10,
+		x: 40,
+		y: 1130,
 	},
 	{
 		img: cardImg12,
-		x: 130,
-		y: 10,
+		x: 530,
+		y: 1300,
 	},
 	{
 		img: cardImg13,
-		x: 140,
-		y: 10,
+		x: 1250,
+		y: 1200,
 	},
 ];
 
@@ -107,74 +113,90 @@ const cardsArray = [
 	{
 		id: 1,
 		name: 'ЯЧЕЙКА 2 – БОГАТСТВО',
-		desc: `Представьте ваши самые роскошные рационы. Возможно, это праздничный ужин, за которым собрались ваши друзья и\u00A0близкие, или любимые блюда/продукты, которые вы регулярно едите. Представьте тот самый рацион, который делает вас краше и\u00A0здоровее.\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние: например, «Мои шикарные завтраки для сияющей кожи».`,
+		desc: `Представьте ваши самые роскошные рационы. Возможно, это праздничный ужин, за которым собрались ваши друзья и\u00A0близкие, или любимые блюда/продукты, которые вы регулярно едите. Представьте тот самый рацион, который делает вас краше и\u00A0здоровее.\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние.`,
 		example: `Мои шикарные завтраки для сияющей кожи`,
 		color: '#f89bb0',
 		textarea_image: textarPink,
 		arrow_image: arrPink,
+		min: 41,
+		max: 44,
 	},
 	{
 		id: 2,
 		name: 'ЯЧЕЙКА 3 – СЛАВА, \nЛИДЕРСТВО',
-		desc: `Представьте момент, в\u00A0котором вы купаетесь в\u00A0лучах славы. Для каждого этот пункт имеет свое значение. Возможно, вы хотите бы настолько известны, что с\u00A0вами фотографируются на улицах. а\u00A0может, к вам подходят в\u00A0спортзале и\u00A0спрашивают, чем вы питаетесь для такой идеальной фигуры.\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние: например, «Я лучшая версия себя».`,
+		desc: `Представьте момент, в\u00A0котором вы купаетесь в\u00A0лучах славы. Для каждого этот пункт имеет свое значение. Возможно, вы хотите бы настолько известны, что с\u00A0вами фотографируются на улицах. а\u00A0может, к вам подходят в\u00A0спортзале и\u00A0спрашивают, чем вы питаетесь для такой идеальной фигуры.\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние.`,
 		example: `Я лучшая версия себя`,
 		color: '#a0d8cd',
 		textarea_image: textarGreen,
 		arrow_image: arrGreen,
+		min: 36,
+		max: 40,
 	},
 	{
 		id: 3,
 		name: 'ЯЧЕЙКА 4 – СЕМЬЯ',
-		desc: `Представьте момент, в\u00A0котором вы делитесь здоровьем со\u00A0своими самыми близкими и\u00A0любимыми. Семейный ужин или вы вместе с\u00A0детьми печете пирог. а\u00A0может, в\u00A0голове картинка, как сытый и\u00A0довольный муж хвалит ваше здоровое меню. Наконец-то! Получилось!\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние: например, «Мои близкие здоровы и\u00A0полны энергии».`,
+		desc: `Представьте момент, в\u00A0котором вы делитесь здоровьем со\u00A0своими самыми близкими и\u00A0любимыми. Семейный ужин или вы вместе с\u00A0детьми печете пирог. а\u00A0может, в\u00A0голове картинка, как сытый и\u00A0довольный муж хвалит ваше здоровое меню. Наконец-то! Получилось!\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние.`,
 		example: `Мои близкие здоровы и\u00A0полны энергии`,
 		color: '#4971e3',
 		textarea_image: textarBlue,
 		arrow_image: arrBlue,
+		min: 32,
+		max: 35,
 	},
 	{
 		id: 4,
 		name: 'ЯЧЕЙКА 5 – САМОВЫРАЖЕНИЕ',
-		desc: `Представьте момент, в\u00A0котором вы заняты любимым творческим делом, вашим хобби, и\u00A0момент, в\u00A0котором самовыражение зависит от вашего здоровья и\u00A0питания. Например, вы всегда мечтали заняться верховой ездой, но\u00A0лишние килограммы не позволяли вам этого. Поймайте момент, в\u00A0котором вы добились идеальной фигуры и\u00A0надеваете ту самую заветную форму наездника. \n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние: например, «Я исполняю свою мечту о\u00A0верховой езде с\u00A0легкостью».`,
+		desc: `Представьте момент, в\u00A0котором вы заняты любимым творческим делом, вашим хобби, и\u00A0момент, в\u00A0котором самовыражение зависит от вашего здоровья и\u00A0питания. Например, вы всегда мечтали заняться верховой ездой, но\u00A0лишние килограммы не позволяли вам этого. Поймайте момент, в\u00A0котором вы добились идеальной фигуры и\u00A0надеваете ту самую заветную форму наездника. \n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние.`,
 		example: `Я исполняю свою мечту о\u00A0верховой езде с\u00A0легкостью`,
 		color: '#f89bb0',
 		textarea_image: textarPink,
 		arrow_image: arrPink,
+		min: 28,
+		max: 31,
 	},
 	{
 		id: 5,
 		name: 'ЯЧЕЙКА 6 – ЗНАНИЯ',
-		desc: `Добавьте на карту момент, который связан с\u00A0вашим образованием, обучением, интеллектуальным ростом. Например, вы давно мечтали научиться готовить дома йогурты. и\u00A0вот вы прошли обучение у\u00A0Сергея Леонова, и\u00A0теперь в\u00A0любой момент можете себя побаловать: сегодня вишневый йогурт, завтра карамельный и\u00A0т. д. Для вас это больше не фантастика, а\u00A0норма вкусной, здоровой жизни!\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние: например, «Я сияю и\u00A0радуюсь, получая новые знания».`,
+		desc: `Добавьте на карту момент, который связан с\u00A0вашим образованием, обучением, интеллектуальным ростом. Например, вы давно мечтали научиться готовить дома йогурты. и\u00A0вот вы прошли обучение у\u00A0Сергея Леонова, и\u00A0теперь в\u00A0любой момент можете себя побаловать: сегодня вишневый йогурт, завтра карамельный и\u00A0т. д. Для вас это больше не фантастика, а\u00A0норма вкусной, здоровой жизни!\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние.`,
 		example: `Я сияю и\u00A0радуюсь, получая новые знания`,
 		color: '#a0d8cd',
 		textarea_image: textarGreen,
 		arrow_image: arrGreen,
+		min: 20,
+		max: 23,
 	},
 	{
 		id: 6,
 		name: 'ЯЧЕЙКА 7 – \nЛЮБОВЬ, БРАК',
-		desc: `Добавьте на карту то, что так ценно вашему сердцу. Вы с\u00A0вашей половинкой в\u00A0красивых купальниках ЗОЖигаете в\u00A0отпуске на море, счастливые и\u00A0подтянутые, а\u00A0может, у\u00A0вас появилось новое совместное увлечение или ждете прибавления в\u00A0семействе. \n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние: например, «Мы с\u00A0любимым счастливы, здоровы и\u00A0скоро станем родителями».`,
+		desc: `Добавьте на карту то, что так ценно вашему сердцу. Вы с\u00A0вашей половинкой в\u00A0красивых купальниках ЗОЖигаете в\u00A0отпуске на море, счастливые и\u00A0подтянутые, а\u00A0может, у\u00A0вас появилось новое совместное увлечение или ждете прибавления в\u00A0семействе. \n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние.`,
 		example: `Мы с\u00A0любимым счастливы, здоровы и\u00A0скоро станем родителями`,
 		color: '#4971e3',
 		textarea_image: textarBlue,
 		arrow_image: arrBlue,
+		min: 16,
+		max: 19,
 	},
 	{
 		id: 7,
 		name: 'ЯЧЕЙКА 8 – КАРЬЕРА',
-		desc: `Представьте момент, в\u00A0котором вы достигаете поставленных для себя высот. Это может быть новая должность, получение желаемой зарплаты или открытие своего дела. Чувствуете мурашки? а\u00A0может, вам важно, чтобы близкие признали ваши заслуги как домохозяйки? Какой элемент здоровья поможет вам достичь желаемого? Питание? Дисциплина? Спорт? Все вместе? \n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние: например, «Я полна энергии и\u00A0стала лучшим сотрудником месяца в\u00A0своей фирме».`,
+		desc: `Представьте момент, в\u00A0котором вы достигаете поставленных для себя высот. Это может быть новая должность, получение желаемой зарплаты или открытие своего дела. Чувствуете мурашки? а\u00A0может, вам важно, чтобы близкие признали ваши заслуги как домохозяйки? Какой элемент здоровья поможет вам достичь желаемого? Питание? Дисциплина? Спорт? Все вместе? \n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние.`,
 		example: `Я полна энергии и\u00A0стала лучшим сотрудником месяца в\u00A0своей фирме`,
 		color: '#f89bb0',
 		textarea_image: textarPink,
 		arrow_image: arrPink,
+		min: 12,
+		max: 15,
 	},
 	{
 		id: 8,
 		name: 'ЯЧЕЙКА 9 – ПУТЕШЕСТВИЯ',
-		desc: `Представьте страну или место, вкус которых вы так хотите попробовать. Загадочная Япония? Или яркая Корея? а\u00A0может, вы давно грезите попробовать настоящий французский багет с\u00A0сыром? Добавляйте на\u00A0карту путешествие своей мечты и\u00A0готовьтесь ЗОЖигать по полной!\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние: например, «Я наслаждаюсь свежевыловленной рыбкой на\u00A0берегу Средиземного моря».`,
+		desc: `Представьте страну или место, вкус которых вы так хотите попробовать. Загадочная Япония? Или яркая Корея? а\u00A0может, вы давно грезите попробовать настоящий французский багет с\u00A0сыром? Добавляйте на\u00A0карту путешествие своей мечты и\u00A0готовьтесь ЗОЖигать по полной!\n\nПодпишите снизу цель и\u00A0фразу, описывающую это состояние.`,
 		example: `Я наслаждаюсь свежевыловленной рыбкой на\u00A0берегу Средиземного моря`,
 		color: '#a0d8cd',
 		textarea_image: textarGreen,
 		arrow_image: arrGreen,
+		min: 1,
+		max: 11,
 	},
 ];
 
@@ -208,11 +230,71 @@ const textData = [
 	{ x: 570, y: 1235, width: 288, height: 400, rotate: -3.5 },
 ];
 
-export const MainPage = () => {
-	const [texts, setTexts] = useState(Array(9).fill(''));
+const initialPhotos = [43, 36, 33, 28, 23, 34, 12, 5, 27];
+
+export const MainPage = ({
+	setImageSrc,
+	setSubmit,
+}: {
+	setImageSrc: (src: string) => void;
+	imageSrc: string;
+	setSubmit: () => void;
+}) => {
+	const canvasRef = useRef<HTMLCanvasElement | null>(null);
+	const [texts, setTexts] = useState(() => {
+		const savedTexts = localStorage.getItem('texts');
+		return savedTexts ? JSON.parse(savedTexts) : Array(9).fill('');
+	});
+
 	const [imageSrcs, setImageSrcs] = useState(Array(9).fill(''));
-	const [currentIndices, setCurrentIndices] = useState(Array(9).fill(1)); // Индексы текущих изображений
+
+	useEffect(() => {
+		localStorage.setItem('texts', JSON.stringify(texts));
+	}, [texts]);
+
+	const [currentIndices, setCurrentIndices] = useState(initialPhotos); // Индексы текущих изображений
 	const [readyFinalMap, setReadyFinalMap] = useState(false);
+	const nameRef = useRef('');
+	const emailRef = useRef('');
+	const phoneRef = useRef('');
+
+	const encodeToBase64 = (str: string) => {
+		return window.btoa(unescape(encodeURIComponent(str)));
+	};
+
+	const handleSubmit = async () => {
+		const fullName = nameRef.current; // Убедитесь, что используете .value
+		const email = emailRef.current;
+		const phone = phoneRef.current;
+
+		// Формирование данных для отправки
+		const urlParams = new URLSearchParams(window.location.search);
+		const source = urlParams.get('utm_source');
+
+		const formData = new URLSearchParams();
+		formData.append('email', email);
+		formData.append('phone', phone);
+		formData.append('fullName', fullName);
+		formData.append('utm_source', source || 'пустой utm_source');
+
+		try {
+			// Отправка запроса
+			const response = await fetch('https://www.dream.leonov-chef.com/submitUserData.php', {
+				method: 'POST',
+				body: formData,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+			});
+
+			const responseData = await response.text(); // Или response.json(), если сервер возвращает JSON
+			console.log('Ответ сервера:', responseData);
+			console.log('Пользователь успешно добавлен!');
+		} catch (error) {
+			console.error('Ошибка:', error);
+			console.log('Ошибка при добавлении пользователя.');
+		}
+	};
 
 	const handleImageUpload = (event: any, setImageSrc: (res: string) => void) => {
 		const file = event.target.files[0];
@@ -229,15 +311,11 @@ export const MainPage = () => {
 
 	useEffect(() => {
 		const newImageSrcs = [];
-		const newIndices = [];
 
-		for (let i = 0; i <= 9; i++) {
-			let newIdx = getRandomImageIdx();
-			newImageSrcs.push(`/photos/${newIdx}.png`);
-			newIndices.push(newIdx);
+		for (let i = 0; i < 9; i++) {
+			newImageSrcs.push(`photos/${currentIndices[i]}.png`);
 		}
 		setImageSrcs(newImageSrcs);
-		setCurrentIndices(newIndices);
 
 		for (let i = 0; i < 8; i++) {
 			examplesArr.push(cardsArray[i].example);
@@ -245,7 +323,9 @@ export const MainPage = () => {
 		examplesArr.push('Я счастлива, здорова, энергична и восхитительна');
 	}, []);
 
-	const loadImage = (src: string) => {
+	console.log(imageSrcs[8]);
+
+	const loadImage = (src: string): Promise<HTMLImageElement> => {
 		return new Promise((resolve) => {
 			const img = new Image();
 			img.src = src;
@@ -292,20 +372,48 @@ export const MainPage = () => {
 		);
 	};
 
-	const downloadCanvasAsImage = (canvas: HTMLCanvasElement) => {
-		const link = document.createElement('a');
-		link.href = canvas.toDataURL('image/png'); // Получаем данные в формате PNG
-		link.download = 'canvas-image.png'; // Имя файла для скачивания
-		document.body.appendChild(link); // Добавляем ссылку в документ
-		link.click(); // Программный клик по ссылке
-		document.body.removeChild(link); // Удаляем ссылку после скачивания
+	const openCanvasAsImage = (canvas: HTMLCanvasElement) => {
+		const imageUrl = canvas.toDataURL('image/png'); // Получаем данные в формате PNG
+		setImageSrc(imageUrl);
+	};
+
+	const removeScroll = (ev: Event) => {
+		ev.preventDefault();
+		ev.stopImmediatePropagation();
 	};
 
 	useEffect(() => {
-		console.log(readyFinalMap);
 		if (readyFinalMap) {
+		
+			// const form = document.getElementById('form-popup');
+			// if (form) {
+			// 	form.style.display = 'flex';
+			// }
+
+			// document.body.style.overflow = 'hidden';
+
+			// Добавляем обработчик события
+
+			// const close = document.getElementById('close');
+			// if (close) {
+			// 	close.addEventListener('click', () => {
+			// 		if (form) {
+			// 			form.style.display = 'none';
+			// 		}
+
+			// 		document.body.style.overflow = 'auto';
+			// 		document.removeEventListener('scroll', removeScroll);
+			// 		setReadyFinalMap(false);
+			// 	});
+			// }
+
+			// setReadyFinalMap(false);
+
 			const canvas = document.createElement('canvas');
+			canvasRef.current = canvas;
 			const context = canvas.getContext('2d');
+
+			console.log('context:', context);
 
 			if (!context) return; // Проверка на наличие контекста
 
@@ -318,6 +426,7 @@ export const MainPage = () => {
 			mapImagePromise
 				.then((mapImage) => {
 					// Рисуем карту после загрузки
+					console.log(imageSrcs);
 					context.drawImage(mapImage as CanvasImageSource, 0, 0, 1478, 2067);
 
 					// Теперь загружаем остальные изображения
@@ -345,8 +454,10 @@ export const MainPage = () => {
 					// Теперь добавим текст на canvas
 					context.font = '600 16px Montserrat'; // Устанавливаем шрифт и размер
 					context.fillStyle = '#615852'; // Устанавливаем цвет текста
+					console.log(textData);
 
 					textData.forEach(({ x, y, width }, idx) => {
+						console.log(texts[idx]);
 						const currentText = texts[idx] ? texts[idx] : examplesArr[idx];
 						const words = currentText.split(' '); // Разбиваем текст на слова
 						let line = '';
@@ -376,16 +487,86 @@ export const MainPage = () => {
 					});
 				})
 				.then(() => {
-					const mainContainer = document.getElementById('canvas_container');
-					if (mainContainer) {
-						// mainContainer.style.display = 'flex';
-						// mainContainer.appendChild(canvas);
-
-						downloadCanvasAsImage(canvas);
-					}
+					const imagePromises = cardsImgs.map(({ x, y, img }) => {
+						return loadImage(img).then((image) => {
+							const width = image.width / 5;
+							const height = image.height / 5;
+							context.drawImage(image as CanvasImageSource, x, y, width, height);
+						});
+					});
+					return Promise.all(imagePromises);
+				})
+				.then(() => {
+					// mainContainer.style.display = 'flex';
+					// mainContainer.appendChild(canvas);
+					openCanvasAsImage(canvas);
+					// downloadCanvasAsImage(canvas);
 				});
+				setSubmit();
 		}
 	}, [readyFinalMap]);
+
+	// useEffect(() => {
+	// 	const form = document.getElementById('ltForm8173843') as HTMLFormElement | null;
+	// 	const errorMessageElement = document.getElementById('error-message');
+
+	// 	const validateForm = async (e: SubmitEvent) => {
+	// 		e.preventDefault(); // Предотвращаем стандартное поведение формы
+
+	// 		if (form && errorMessageElement) {
+	// 			const fullName = form['formParams[full_name]'].value;
+	// 			const email = form['formParams[email]'].value;
+	// 			const phone = form['formParams[phone]'].value;
+
+	// 			// Проверка имени
+	// 			if (fullName.trim() === '') {
+	// 				return;
+	// 			}
+
+	// 			// Проверка email
+	// 			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	// 			if (!emailPattern.test(email)) {
+	// 				return;
+	// 			}
+
+	// 			// Проверка телефона
+	// 			const phonePattern = /^\+?\d{1,3}[- ]?\(?\d{1,4}?\)?[- ]?\d{1,4}[- ]?\d{1,4}$/;
+	// 			if (!phonePattern.test(phone)) {
+	// 				return;
+	// 			}
+
+	// 			const checkboxes = document.querySelectorAll('.checkbox_container input[type="checkbox"]');
+	// 			for (const checkbox of checkboxes) {
+	// 				if (!(checkbox as HTMLInputElement).checked) {
+	// 					errorMessageElement.style.display = 'block';
+	// 					errorMessageElement.textContent = 'Галочки не проставлены';
+	// 					return;
+	// 				}
+	// 			}
+
+	// 			nameRef.current = fullName;
+	// 			emailRef.current = email;
+	// 			phoneRef.current = phone;
+
+	// 			handleSubmit();
+	// 			// Если все проверки пройдены, отправляем форму
+	// 			setSubmit();
+
+	// 			console.log('submit')
+
+	// 			document.removeEventListener('scroll', removeScroll);
+	// 		}
+	// 	};
+
+	// 	if (form) {
+	// 		form.addEventListener('submit', validateForm);
+	// 	}
+
+	// 	// Убираем обработчик при размонтировании компонента
+	// 	return () => {
+	// 		form && form.removeEventListener('submit', validateForm);
+	// 	};
+	// }, [readyFinalMap]);
 
 	return (
 		<div className={cls.MainPage} id='main-container'>
@@ -441,12 +622,12 @@ export const MainPage = () => {
 				<b>Следуйте инструкции и заполняйте окошки.</b>
 			</p>
 			<img src={img4} alt='lets go' className={cls.img3} />
-			<h1>
+			{/* <h1>
 				Пожалуйста,
 				<br />
 				представьтесь:
 			</h1>
-			<p>ФОРМА</p>
+			<p>ФОРМА</p> */}
 			<img src={step1} alt='step 1' className={`${cls.step1} ${cls.step}`} />
 			<ul>
 				<li>
@@ -491,8 +672,7 @@ export const MainPage = () => {
 				наилучшей форме. Например, гордо стоите в обтягивающем платье или только что пробежали свой
 				первый полумарафон. <br />
 				<br />
-				Подпишите снизу цель и фразу, описывающую это состояние: например, «Я счастлива, здорова,
-				энергична и восхитительна».
+				Подпишите снизу цель и фразу, описывающую это состояние.
 			</p>
 			<h2 className={cls.add_photo_text}>Загрузите ваше фото</h2>
 			<input
@@ -501,7 +681,7 @@ export const MainPage = () => {
 				onChange={(ev) =>
 					handleImageUpload(ev, (res) => {
 						const newImageSrcs = [...imageSrcs];
-						newImageSrcs[9] = res;
+						newImageSrcs[8] = res;
 						setImageSrcs(newImageSrcs);
 					})
 				}
@@ -512,10 +692,10 @@ export const MainPage = () => {
 				<img src={addPhoto} alt='add photo' className={cls.add_photo} />
 			</label>
 			<div className={cls.card_vert}>
-				<div className={cls.user_photo} style={{ backgroundImage: `url(${imageSrcs[9]})` }} />
+				<div className={cls.user_photo} style={{ backgroundImage: `url(${imageSrcs[8]})` }} />
 				<div className={cls.text}>
-					{texts[9] ? (
-						texts[9]
+					{texts[8] ? (
+						texts[8]
 					) : (
 						<>
 							ПРИМЕР ТЕКСТА:
@@ -528,11 +708,11 @@ export const MainPage = () => {
 					<button
 						onClick={() => {
 							const newIndices = [...currentIndices];
-							newIndices[8] = newIndices[8] > 1 ? newIndices[8] - 1 : 44;
+							newIndices[8] = newIndices[8] > 24 ? newIndices[8] - 1 : 27;
 							setCurrentIndices(newIndices);
 
 							const newImageSrcs = [...imageSrcs];
-							newImageSrcs[9] = `photos/${newIndices[8]}.png`;
+							newImageSrcs[8] = `photos/${newIndices[8]}.png`;
 							setImageSrcs(newImageSrcs);
 						}}
 						style={{
@@ -542,11 +722,11 @@ export const MainPage = () => {
 					<button
 						onClick={() => {
 							const newIndices = [...currentIndices];
-							newIndices[8] = newIndices[8] < 44 ? newIndices[8] + 1 : 1;
+							newIndices[8] = newIndices[8] < 27 ? newIndices[8] + 1 : 24;
 							setCurrentIndices(newIndices);
 
 							const newImageSrcs = [...imageSrcs];
-							newImageSrcs[9] = `photos/${newIndices[8]}.png`;
+							newImageSrcs[8] = `photos/${newIndices[8]}.png`;
 							setImageSrcs(newImageSrcs);
 						}}
 						style={{
@@ -568,7 +748,7 @@ export const MainPage = () => {
 					const { value } = event.target;
 					if (value.length <= 140) {
 						const newTexts = [...texts];
-						newTexts[9] = value;
+						newTexts[8] = value;
 						setTexts(newTexts);
 					}
 				}}></textarea>
@@ -605,7 +785,7 @@ export const MainPage = () => {
 				/>
 			))}
 
-			<div className={cls.blue_button} onClick={() => setReadyFinalMap(true)}>
+			{/* <div className={cls.blue_button} onClick={() => setReadyFinalMap(true)}>
 				<h1>Внимание!</h1>
 				<h3>
 					Нажми, чтобы увидеть предварительный результат карты для активации.
@@ -613,12 +793,15 @@ export const MainPage = () => {
 					Все еще можно исправить!
 				</h3>
 				<button>Посмотреть</button>
-			</div>
+			</div> */}
 			<img src={img6} alt='will be' className={cls.img6} />
-			<h1 className={cls.send_text} onClick={() => setReadyFinalMap(true)}>
-				<span>нажми,</span> чтобы активировать карту <span>и запустить процесс</span> исполнения
-				желаний
+			<h1 className={cls.send_text}>
+				чтобы активировать карту <span>и запустить процесс</span> исполнения желаний
 			</h1>
+			<button className={cls.download} onClick={() => setReadyFinalMap(true)}>
+				НАЖМИ СЮДА
+			</button>
+
 			<img src={img7} alt='will be' className={cls.img7} />
 			<div className={cls.blue_line}></div>
 
