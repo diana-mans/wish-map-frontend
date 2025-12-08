@@ -13,25 +13,18 @@ export const FinalPage = ({ imageSrc }: { imageSrc: string }) => {
 		window.scrollTo(0, 0);
 	}, []);
 
-	const downloadImage = async () => {
-		try {
-			const response = await fetch(imageSrc);
-			const blob = await response.blob();
-			const file = new File([blob], 'wish-map.png', { type: 'image/png' });
-			
-			if (navigator.share && navigator.canShare({ files: [file] })) {
-				await navigator.share({
-					files: [file],
-					title: 'Сохранить в галерею'
-				});
-			} else {
-				// Fallback для iOS или старых Android
-				downloadImage(); // ваша текущая функция
-			}
-			} catch (error) {
-				console.error('Error sharing:', error);
+	const downloadImage = () => {
+		if (imageSrc) {
+			const link = document.createElement('a');
+			link.href = imageSrc; // Получаем данные в формате PNG
+			link.download = 'wish-map.png'; // Имя файла для скачивания
+			document.body.appendChild(link); // Добавляем ссылку в документ
+			link.click(); // Программный клик по ссылке
+			document.body.removeChild(link); // Удаляем ссылку после скачивания
+			setDownloaded(true);
 		}
 	};
+	
 	return (
 		<div className={cls.FinalPage}>
 			{/* <div className={cls.container}>
@@ -96,7 +89,7 @@ export const FinalPage = ({ imageSrc }: { imageSrc: string }) => {
 			<button className={cls.download_btn} onClick={() => downloadImage()}>
 				{downloadedImg ? 'Карта загружена' : 'Скачать карту'}
 			</button>
-			{openedPopup && (
+			{false && (
 				<Popup
 					closePopup={() => {
 						document.body.style.overflow = 'auto';
